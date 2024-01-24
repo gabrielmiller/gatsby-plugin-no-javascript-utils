@@ -48,9 +48,10 @@ exports.onPreRenderHTML = (
     let postBody = getPostBodyComponents();
 
     if (noScript) {
-      head = head.filter(
-        (i) => i.type !== 'link' || i.props.rel !== 'preload' || !(i.props.as === 'script' || i.props.as === 'fetch'),
-      );
+      head = head.filter((i) => {
+        if (i.type === 'link' && 'data-allowed' in i.props) { return true; }
+        return i.type !== 'link' || i.props.rel !== 'preload' || !(i.props.as === 'script' || i.props.as === 'fetch')
+      });
 
       postBody = postBody.filter((i) => {
         if (i.type === 'script' && (!i.props.type || scriptType.has(i.props.type))) {
