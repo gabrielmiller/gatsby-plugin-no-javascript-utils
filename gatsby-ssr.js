@@ -86,6 +86,10 @@ exports.onPreRenderHTML = (
           if (reactHelmet in i.props) {
             delete i.props[reactHelmet];
           }
+
+          if ('data-allowed' in i.props) {
+            delete i.props['data-allowed'];
+          }
         }
       });
     }
